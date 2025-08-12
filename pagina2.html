@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Página 2 💕</title>
-<link rel="stylesheet" href="css/style2.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jogo do Nosso Amor - Pergunta 2</title>
+  <link rel="stylesheet" href="css/style1.css" />
 </head>
 <body>
+  <div id="progressBarContainer">
+  <div id="progressBar"></div>
+</div>
   <div class="container fade-in">
-    <h1>Você é a pessoa mais especial da minha vida 💫</h1>
-    <p>Mas calma... ainda tem uma surpresa!</p>
-    <button id="btnProximo">Ir para a próxima surpresa</button>
+    <h1>Qual é a nossa música?</h1>
+    <button data-answer="errado">Te Amo - Anavitória</button>
+    <button data-answer="correto">Te Vivo - Luan Santana</button>
+    <button data-answer="errado">Perfect - Ed Sheeran</button>
+    <button data-answer="errado">Shallow - Lady Gaga</button>
+    <p id="feedback"></p>
   </div>
+
   <script src="js/script2.js"></script>
+  <script src="js/coracoes.js"></script>
 </body>
 </html>

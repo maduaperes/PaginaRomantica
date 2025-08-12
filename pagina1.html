@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nível 1 💖</title>
-<link rel="stylesheet" href="css/style1.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jogo do Nosso Amor - Pergunta 1</title>
+  <link rel="stylesheet" href="css/style1.css" />
 </head>
 <body>
-    <div class="container fade-in">
-        <h1>Oi, meu amor ❤️</h1>
-        <p>Hoje preparei algo especial para você...</p>
-        <button id="btnProximo">Clique para continuar</button>
-    </div>
-    <script src="js/script1.js"></script>
+  <div id="progressBarContainer">
+  <div id="progressBar"></div>
+</div>
+  <div class="container fade-in">
+    <h1>Qual a data do nosso primeiro beijo?</h1>
+    <button data-answer="errado">12 de Maio 2025</button>
+    <button data-answer="correto">11 de Janeiro 2025</button>
+    <button data-answer="errado">15 de Julho 2025</button>
+    <button data-answer="errado">30 de Agosto 2025</button>
+    <p id="feedback"></p>
+  </div>
+
+  <script src="js/script1.js"></script>
+  <script src="js/coracoes.js"></script>
 </body>
 </html>

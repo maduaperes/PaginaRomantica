@@ -1,40 +1,51 @@
-const btnSim = document.getElementById("btnSim");
-const btnNao = document.getElementById("btnNao");
+// Ajuste para cada página (1 a 5)
+const currentStep = 3; // altere conforme a página atual
+const totalSteps = 5;
 
-btnSim.addEventListener("click", () => {
-  // Cria animação de corações crescendo antes do alerta
-  const container = document.querySelector(".container");
+const progressBar = document.getElementById("progressBar");
+const buttons = document.querySelectorAll("button[data-answer]");
+const feedback = document.getElementById("feedback");
 
-  // Cria 10 corações grandes que aparecem e somem
-  for (let i = 0; i < 10; i++) {
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.style.position = "absolute";
-    heart.style.fontSize = "40px";
-    heart.style.left = `${Math.random() * 100}%`;
-    heart.style.top = `${Math.random() * 100}%`;
-    heart.style.opacity = "1";
-    heart.style.transition = "all 1s ease-out";
-    heart.textContent = "💖";
-    container.appendChild(heart);
-    setTimeout(() => {
-      heart.style.opacity = "0";
-      heart.style.transform = "scale(2)";
-    }, 50);
-    setTimeout(() => heart.remove(), 1050);
+// Atualiza a barra de progresso
+function updateProgressBar() {
+  const percent = (currentStep / totalSteps) * 100;
+  progressBar.style.width = percent + "%";
+}
+
+function showFeedback(text, isCorrect) {
+  feedback.textContent = text;
+  feedback.classList.remove("feedback-correct", "feedback-wrong");
+
+  // Força reflow para reiniciar a animação
+  void feedback.offsetWidth;
+
+  if (isCorrect) {
+    feedback.classList.add("feedback-correct");
+  } else {
+    feedback.classList.add("feedback-wrong");
   }
+}
 
-  setTimeout(() => {
-    alert("Eu sabia que você diria SIM! 💖 Te amo!");
-    window.location.href = "pagina1.html";
-  }, 1100);
+// Quando clicar numa resposta
+buttons.forEach(button => {
+  button.addEventListener("click", () => {
+    const answer = button.getAttribute("data-answer");
+    if (answer === "correto") {
+      showFeedback("❤️ Acertou! Você é incrível!");
+      // Espera 1.5s e vai pra próxima página ou final
+      setTimeout(() => {
+        if (currentStep < totalSteps) {
+          window.location.href = `pagina${currentStep + 1}.html`;
+        } else {
+          window.location.href = "final.html";
+        }
+      }, 1500);
+    } else {
+      showFeedback("Ops, tente de novo! 💔");
+      // Opcional: animação de erro, shake, etc
+    }
+  });
 });
 
-btnNao.addEventListener("click", () => {
-  // Botão “Não” se move para lado aleatório na tela como brincadeira
-  const x = Math.random() * (window.innerWidth - btnNao.offsetWidth);
-  const y = Math.random() * (window.innerHeight - btnNao.offsetHeight);
-  btnNao.style.position = "absolute";
-  btnNao.style.left = `${x}px`;
-  btnNao.style.top = `${y}px`;
-});
+// Inicializa tudo
+updateProgressBar();

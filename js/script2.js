@@ -1,39 +1,51 @@
-const btnProximo = document.getElementById("btnProximo");
-const container = document.querySelector(".container");
+// Ajuste para cada página (1 a 5)
+const currentStep = 2; // altere conforme a página atual
+const totalSteps = 5;
 
-btnProximo.addEventListener("click", () => {
-  // Cria overlay de loading
-  const loadingOverlay = document.createElement("div");
-  loadingOverlay.id = "loadingOverlay";
-  loadingOverlay.innerHTML = `<div class="loading-text">Carregando<span id="dots"></span></div>`;
-  document.body.appendChild(loadingOverlay);
-  
-  // Esconde container
-  container.style.display = "none";
+const progressBar = document.getElementById("progressBar");
+const buttons = document.querySelectorAll("button[data-answer]");
+const feedback = document.getElementById("feedback");
 
-  // Anima os "..."
-  let dots = 0;
-  const dotsSpan = document.getElementById("dots");
-  const interval = setInterval(() => {
-    dots = (dots + 1) % 4; // 0 a 3
-    dotsSpan.textContent = '.'.repeat(dots);
-  }, 500);
-
-  // Depois de 2.5 segundos, tira o loading e vai pra página 3
-  setTimeout(() => {
-    clearInterval(interval);
-    window.location.href = "pagina3.html";
-  }, 2500);
-});
-
-function createHeart() {
-  const heart = document.createElement("div");
-  heart.classList.add("heart");
-  heart.textContent = "💖";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 5000);
+// Atualiza a barra de progresso
+function updateProgressBar() {
+  const percent = (currentStep / totalSteps) * 100;
+  progressBar.style.width = percent + "%";
 }
 
-setInterval(createHeart, 300);
+function showFeedback(text, isCorrect) {
+  feedback.textContent = text;
+  feedback.classList.remove("feedback-correct", "feedback-wrong");
+
+  // Força reflow para reiniciar a animação
+  void feedback.offsetWidth;
+
+  if (isCorrect) {
+    feedback.classList.add("feedback-correct");
+  } else {
+    feedback.classList.add("feedback-wrong");
+  }
+}
+
+// Quando clicar numa resposta
+buttons.forEach(button => {
+  button.addEventListener("click", () => {
+    const answer = button.getAttribute("data-answer");
+    if (answer === "correto") {
+      showFeedback("❤️ Acertou! Você é incrível!");
+      // Espera 1.5s e vai pra próxima página ou final
+      setTimeout(() => {
+        if (currentStep < totalSteps) {
+          window.location.href = `pagina${currentStep + 1}.html`;
+        } else {
+          window.location.href = "final.html";
+        }
+      }, 1500);
+    } else {
+      showFeedback("Ops, tente de novo! 💔");
+      // Opcional: animação de erro, shake, etc
+    }
+  });
+});
+
+// Inicializa tudo
+updateProgressBar();

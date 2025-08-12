@@ -1,5 +1,5 @@
 // Ajuste para cada página (1 a 5)
-const currentStep = 1; // altere conforme a página atual
+const currentStep = 5; // altere conforme a página atual
 const totalSteps = 5;
 
 const progressBar = document.getElementById("progressBar");
@@ -12,7 +12,6 @@ function updateProgressBar() {
   progressBar.style.width = percent + "%";
 }
 
-// Mostra mensagem de feedback
 function showFeedback(text, isCorrect) {
   feedback.textContent = text;
   feedback.classList.remove("feedback-correct", "feedback-wrong");
